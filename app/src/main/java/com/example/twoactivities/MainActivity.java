@@ -1,5 +1,6 @@
 package com.example.twoactivities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,43 +11,42 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String LOG_TAG =
-            MainActivity.class.getSimpleName();
-    public static final String EXTRA_MESSAGE =
-            "com.example.twoactivities.extra.MESSAGE";
-    public static final int TEXT_REQUEST = 1;
-
-    private EditText mMessageEditText;
-    private TextView mReplyHeadTextView;
-    private TextView mReplyTextView;
+    private int mCount;
+    private EditText text_edit;
+    private TextView txtCount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mMessageEditText = findViewById(R.id.editText_main);
-        mReplyHeadTextView = findViewById(R.id.text_header_reply);
-        mReplyTextView = findViewById(R.id.text_message_reply);
-    }
-    @Override
-    public void onActivityResult(int requestCode,
-                                 int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == TEXT_REQUEST) {
-            if (resultCode == RESULT_OK) {
-                String reply =
-                        data.getStringExtra(SecondActivity.EXTRA_REPLY);
-                mReplyHeadTextView.setVisibility(View.VISIBLE);
-                mReplyTextView.setText(reply);
-                mReplyTextView.setVisibility(View.VISIBLE);
-            }
+
+        mCount=0;
+        txtCount= (TextView)findViewById(R.id.text_count);
+
+        text_edit=(EditText) findViewById(R.id.editText_main);
+
+        if(savedInstanceState!=null){
+            mCount= savedInstanceState.getInt("count");
+            text_edit.setText(savedInstanceState.getString("textSave"));
+            txtCount.setText(Integer.toString(mCount));
         }
     }
 
-    public void launchSecondActivity(View view) {
-        Log.d(LOG_TAG, "Button clicked!");
-        Intent intent = new Intent(this, SecondActivity.class);
-        String message = mMessageEditText.getText().toString();
-        intent.putExtra(EXTRA_MESSAGE, message);
-        startActivityForResult(intent, TEXT_REQUEST);
+
+    public void countClick(View view) {
+        mCount++;
+        if(this.txtCount != null)
+            this.txtCount.setText(Integer.toString(mCount));
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (mCount !=0){
+            outState.putInt("count", mCount);
+        }
+        if (text_edit.getText()!=null){
+            outState.putString("textSave",text_edit.getText().toString());
+        }
     }
 }
