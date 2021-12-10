@@ -1,8 +1,14 @@
 <resources>
     <string name="app_name">Two Activities</string>
-    <string name="button_main">Send</string>
+    <string name="button_main">ADD</string>
+    <string name="button_apple">Apple</string>
+    <string name="button_cheese">Cheese</string>
+    <string name="button_orange">Orange</string>
+    <string name="button_rice">Rice</string>
+    <string name="button_egg">Eggs</string>
+    <string name="button_icecream">icecream</string>
     <string name="editText_main">Enter Your Message Here</string>
-    <string name="text_header">Message Received</string>
+    <string name="text_header">Shopping List</string>
     <string name="button_second">Reply</string>
     <string name="editText_second">Enter Your Reply Here</string>
     <string name="text_header_reply">Reply Received</string>
